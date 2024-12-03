@@ -1,5 +1,3 @@
-Here’s a list of deployment and rollback strategies commonly used in DevOps, along with their use cases:
-
 Deployment Strategies
 
 	1.	Recreate (Stop and Start)
@@ -103,4 +101,3 @@ High-availability systems	Canary Deployment, Blue-Green Deployment
 Production-like testing before release	Shadow Deployment
 Cost-sensitive environments	Rolling Deployment, Recreate Strategy
 
-Let me know if you’d like further elaboration or specific examples!
