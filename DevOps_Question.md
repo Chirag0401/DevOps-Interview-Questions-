@@ -1,5 +1,3 @@
-The uploaded image contains 34 questions. I’ll provide comprehensive answers to each of them in sequence:
-
 1. What scripting languages are you familiar with?
 
 	•	Bash, Python, PowerShell, JavaScript (Node.js), and Groovy (for Jenkins pipelines).
@@ -193,5 +191,3 @@ pipeline {
         }
     }
 }
-
-Let me know if you need further explanations on any of the answers!
