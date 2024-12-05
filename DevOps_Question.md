@@ -191,3 +191,172 @@ pipeline {
         }
     }
 }
+
+34. What is Databricks?
+
+Databricks is a cloud-based platform that integrates big data processing and machine learning. It is built on Apache Spark and provides collaborative workspaces for data engineering, data science, and machine learning workflows. Key features include:
+	•	Unified data lakehouse architecture.
+	•	Seamless integration with cloud services (AWS, Azure, GCP).
+	•	Interactive notebooks for collaborative development.
+	•	Advanced machine learning capabilities and big data processing.
+
+35. What is a Load Balancer and Auto Scaling?
+
+	•	Load Balancer: A system that distributes incoming network or application traffic across multiple servers to ensure reliability and performance. Common types include:
+	•	Application Load Balancer (ALB): Operates at the application layer (Layer 7) and is ideal for HTTP/HTTPS traffic.
+	•	Network Load Balancer (NLB): Operates at the transport layer (Layer 4) and handles TCP/UDP traffic.
+	•	Auto Scaling: Automatically adjusts the number of instances in a server group based on the load, ensuring cost-efficiency and high availability.
+
+36. What is CloudTrail?
+
+AWS CloudTrail is a service that logs all API calls and actions made in your AWS account, providing visibility for auditing, compliance, and troubleshooting purposes.
+Features:
+	•	Tracks user activity and resource changes.
+	•	Integrates with CloudWatch for monitoring.
+	•	Generates logs of account activity across AWS services.
+
+37. What is a Terraform module, and what is its purpose?
+
+A Terraform module is a container for organizing and reusing configuration files in Terraform.
+Purpose:
+	•	Simplifies complex configurations by modularizing code.
+	•	Ensures consistency across multiple deployments.
+	•	Allows sharing of reusable infrastructure components.
+
+38. What will happen if someone changes resource values on the console and you do a terraform apply?
+
+Terraform will detect the differences between the current resource state in the cloud and the Terraform state file. Depending on the configuration, it will either:
+	•	Revert: Overwrite the changes in the cloud to match the configuration in your code.
+	•	Fail: Show a drift error if changes conflict with your Terraform-managed state.
+
+39. What is Terraform taint?
+
+The terraform taint command marks a resource as needing to be recreated in the next terraform apply.
+Use cases:
+	•	Forcing resource replacement to apply updated configurations.
+	•	Resolving issues or applying changes to resources that cannot be updated in place.
+
+40. What is Terraform refresh?
+
+The terraform refresh command updates the Terraform state file with the current state of resources in the cloud. It:
+	•	Syncs the state file with actual infrastructure.
+	•	Detects any changes or drift in resource configurations.
+
+41. How to connect on-premise to an application in a VPC cloud?
+
+You can connect on-premise to a VPC using:
+	•	VPN Connection: Establish a site-to-site VPN between on-premise and AWS.
+	•	Direct Connect: A dedicated, high-speed connection for seamless communication between on-premise and AWS.
+	•	Transit Gateway: Allows multiple VPCs and on-premise connections to communicate via a central hub.
+
+42. How to terminate 9 EC2 instances and leave one running?
+
+	•	Use a script or manual process to identify and terminate 9 instances:
+
+aws ec2 describe-instances --filters Name=tag:YourTag,Values=YourValue \
+    --query 'Reservations[*].Instances[*].InstanceId' --output text \
+    | head -n 9 | xargs -I {} aws ec2 terminate-instances --instance-ids {}
+
+
+	•	Verify the remaining instance is running using describe-instances.
+
+43. How to create 10 EC2 machines with incremental values like 0,1,2, etc.?
+
+Use a script to automate EC2 instance creation:
+
+for i in {0..9}
+do
+  aws ec2 run-instances --image-id ami-0abcd1234efgh5678 \
+      --count 1 --instance-type t2.micro \
+      --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=Instance-$i}]"
+done
+
+44. Write a Jenkins pipeline script for Terraform deployment.
+
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://your-repo.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Terraform Apply') {
+            steps {
+                sh 'terraform apply -auto-approve'
+            }
+        }
+    }
+}
+
+45. Current Jenkins version.
+
+The latest Jenkins version can be found on the official Jenkins website. Always update to the latest Long-Term Support (LTS) version for stability and security.
+
+46. What are the issues of using a single pipeline vs. multiple pipelines?
+
+	•	Single Pipeline:
+	•	Pros: Centralized management, easier to maintain.
+	•	Cons: Becomes complex as the project grows, bottlenecks in execution.
+	•	Multiple Pipelines:
+	•	Pros: Clear separation of responsibilities, better scalability.
+	•	Cons: Requires more maintenance effort and coordination.
+
+47. What is the difference between a single Jenkins CI/CD pipeline and multiple pipelines?
+
+	•	Single Pipeline: Manages all stages (build, test, deploy) in a single job. Useful for small projects.
+	•	Multiple Pipelines: Breaks stages into separate jobs or pipelines, offering better modularity and parallelism for large projects.
+
+48. Experience with GCP Cloud?
+
+If asked, provide an example of working with Google Cloud services like:
+	•	Compute Engine for VMs.
+	•	Cloud Storage for object storage.
+	•	BigQuery for data analytics.
+	•	Kubernetes Engine (GKE) for container orchestration.
+
+49. What is Route53?
+
+Route53 is AWS’s scalable and highly available DNS (Domain Name System) web service.
+Key Features:
+	•	Domain registration.
+	•	DNS routing (latency, geolocation, weighted, failover).
+	•	Health checks and monitoring.
+
+50. Application Load Balancer vs. Network Load Balancer
+
+	•	Application Load Balancer (ALB):
+	•	Operates at Layer 7 (Application Layer).
+	•	Ideal for HTTP/HTTPS and application-specific traffic.
+	•	Supports advanced routing based on URL, headers, etc.
+	•	Network Load Balancer (NLB):
+	•	Operates at Layer 4 (Transport Layer).
+	•	Best for high-performance, low-latency TCP/UDP traffic.
+
+51. How can we discover if a branch has already been merged in Git?
+
+Use the following Git command:
+
+git branch --merged
+
+This will list all branches that have been merged into the current branch.
+
+52. How can we remove a file from Git without removing it from the filesystem?
+
+Use the git rm --cached command:
+
+git rm --cached <file>
+
+This removes the file from Git’s tracking while keeping it in your local filesystem.
+
+
